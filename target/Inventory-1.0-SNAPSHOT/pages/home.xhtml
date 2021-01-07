@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:view>
+    <ui:debug hotkey="q" rendered="true"/>
+    <h:head>
+
+    </h:head>
+
+    <h:body>
+        <h:form id="form">
+            <p:dialog header="Error List" widgetVar="errDlg" modal="true">
+                <p:messages id="messages" showDetail="true" closable="true">
+                    <p:autoUpdate />
+                </p:messages>
+            </p:dialog>
+            <p:panel>
+                <p:menubar>
+                    <p:submenu label="inventory" icon="pi pi-file">
+                        <p:menuitem value="quantity unit" url="http://localhost:7001/Inventory-1.0-SNAPSHOT/pages/quantityUnitIndex.xhtml" />
+                        <p:menuitem value="goods"  url="http://localhost:7001/Inventory-1.0-SNAPSHOT/pages/goodsAndUnitIndex.xhtml" />
+                        <p:menuitem value="inventory"  url="http://localhost:7001/Inventory-1.0-SNAPSHOT/pages/inventoryIndex.xhtml" />
+                        <p:separator/>
+                        <p:menuitem value="home" icon="pi pi-home" url="http://localhost:7001/Inventory-1.0-SNAPSHOT"/>
+                    </p:submenu>
+                </p:menubar>
+            </p:panel>
+
+            <p:panel>
+                <ui:insert name="content"/>
+            </p:panel>
+
+        </h:form>
+    </h:body>
+</f:view>
+</html>

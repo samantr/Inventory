@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      template="home.xhtml" >
+
+    <ui:define name="content">
+        <f:metadata>
+            <f:viewParam name="formState" value="#{goodsDetailController.goodsModel.formState}"/>
+            <f:viewParam name="recId" value="#{goodsDetailController.goodsModel.recId}"/>
+            <!--<f:event type="preRenderView" listener="#{goodsDetailController.initParameter}" />-->
+            <f:viewAction action="#{goodsDetailController.initParameter}" />
+        </f:metadata>
+
+        <p:panel>
+            <p:toolbar>
+                <f:facet name="left">
+                    <p:commandButton  value="cancel" action="#{goodsDetailController.navigate}" icon="pi pi-file"  />
+                    <p:commandButton  value="save" disabled="#{goodsDetailController.disabled}" action="#{goodsDetailController.save}" title="Save" icon="pi pi-save" />
+                </f:facet>
+            </p:toolbar>
+        </p:panel>
+
+        <p:panel>
+            <p:panelGrid columns="4">
+                <p:outputLabel value="goods code" for="gCode"/>
+                <p:inputText id="gCode" disabled="#{goodsDetailController.disabled}" value="#{goodsDetailController.goodsModel.goodsAndUnitsDto.gCode}"/>
+
+                <p:outputLabel value="goods name" for="gName"/>
+                <p:inputText id="gName" disabled="#{goodsDetailController.disabled}" value="#{goodsDetailController.goodsModel.goodsAndUnitsDto.gName}"/>
+
+                <p:outputLabel value="unit name"  for="qName"/>
+                <p:inputText id="qName" disabled="#{true}" value="#{goodsDetailController.goodsModel.goodsAndUnitsDto.qName}"/>
+
+                <p:commandButton disabled="#{goodsDetailController.disabled}" value="look up" onclick="PF('dlg').show();" icon="">
+                    <p:dialog header="quantity units" widgetVar="dlg">
+                        <p:dataTable id="tbl"
+                                     value="#{quantityUnitController.quantityUnitModel.quantityUnitDtos}"
+                                     var="dtoRow"
+                                     selectionMode="single"
+                                     selection="#{goodsDetailController.goodsModel.quantityUnitDto}"
+                                     rowKey="#{dtoRow.id}"
+                                     filteredValue="#{goodsDetailController.goodsModel.filterdQuantityUnitDtos}">
+
+                            <f:facet name="header" >
+                                <p:outputLabel value="Goods"/>
+                            </f:facet>
+
+                            <p:column filterBy="#{dtoRow.code}" headerText="Code" footerText="contains" filterMatchMode="contains">
+                                <h:outputText value="#{dtoRow.code}" />
+                            </p:column>
+                            <p:column filterBy="#{dtoRow.name}" headerText="name" footerText="contains" filterMatchMode="contains">
+                                <h:outputText value="#{dtoRow.name}" />
+                            </p:column>
+
+                            <f:facet name="footer">
+                                <p:commandButton process="tbl" action="#{goodsDetailController.fillUnit}" update="form:qName" icon="pi pi-search" value="View" oncomplete="PF('dlg').hide();" >
+                                </p:commandButton>
+                            </f:facet>
+                        </p:dataTable>
+                    </p:dialog>
+                </p:commandButton>
+
+            </p:panelGrid>
+        </p:panel>
+
+    </ui:define>
+
+</ui:composition>
